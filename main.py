@@ -7,8 +7,11 @@ from circleshape import *
 from shot import *
 
 
+
 def main():
     pygame.init()
+    pygame.font.init()
+    font = pygame.font.SysFont(None, 24)
     pygame.display.set_caption("Asteroids Game")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -19,7 +22,7 @@ def main():
     
     # Create player and add to groups
     
-    
+    score = 0
  
     Player.containers = (updateable, drawable)
     Asteroid.containers = (asteroids, updateable, drawable)
@@ -38,6 +41,8 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
+    
+
     # Main game loop
     running = True
     while running:
@@ -47,6 +52,11 @@ def main():
 
         updateable.update(dt)
 
+        screen.fill("black")
+
+        img = font.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(img,(10, 10) )
+
         for shot in shots:
             shot.update(dt)
             shot.draw(screen)
@@ -54,17 +64,18 @@ def main():
         for asteroid in asteroids:
             for shot in shots:
                 if shot.collides_with(asteroid):
+                    score += 1
                     print("Shot hit an asteroid!")
                     shot.kill()
-                    asteroid.kill()
+                    asteroid.split()
                     break
             if player.collides_with(asteroid):
                 print("Collision detected!")
-                print(f"Player position: {player.position}, Asteroid position: {asteroid.position}")
+                print(f"Player died at position: {player.position}, Asteroid position: {asteroid.position}")
+                print(f"Total score: {score}")
                 print("Game Over!")
                 running = False
 
-        screen.fill("black")
         
         for sprite in drawable:
             sprite.draw(screen)

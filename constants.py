@@ -13,3 +13,5 @@ PLAYER_SPEED = 200
 PLAYER_TURN_SPEED = 300  # degrees per second
 
 SHOT_RADIUS = 5
+
+HIGH_SCORE = 0
