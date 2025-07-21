@@ -15,3 +15,5 @@ class Asteroid(CircleShape):
         self.position += self.velocity * dt
         self.rotation += 0.1 * dt  # Rotate slowly for visual effect
         self.rotation %= 360
+
+        
